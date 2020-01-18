@@ -147,7 +147,7 @@ function removeEmployee() {
       {
         name: "employee_id",
         type: "input",
-        message: "Which employee do you want to remove?"
+        message: "Which employee ID do you want to remove?"
       }
     ])
     .then(function(answer) {
