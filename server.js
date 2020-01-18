@@ -1,13 +1,20 @@
 // Dependencies
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+var cTable = require("console.table");
 
 var connection = mysql.createConnection({
   host: "localhost",
   port: 3306,
   user: "root",
   password: "password",
-  database: "quotes_db"
+  database: "companyEmployeeDB"
+});
+
+connection.connect(function(err) {
+  if (err) throw err;
+  runSearch();
+  console.log("connected as id " + connection.threadId);
 });
 
 function runSearch() {
@@ -61,10 +68,25 @@ function runSearch() {
 }
 
 // Search All Employee
-function allEmployee() {}
+function allEmployee() {
+  var query =
+    "SELECT employee.id, employee.first_name, employee.last_name, role.title, role.salary, department.name FROM department INNER JOIN role ON role.department_id = department.id INNER JOIN employee ON employee.role_id = role.id";
+  connection.query(query, function(err, results) {
+    const table = cTable.getTable(results);
+    console.log(table);
+    if (err) throw err;
+    runSearch();
+  });
+}
 
 // Search Department
-function byDepartment() {}
+function byDepartment() {
+  var query = "SELECT * FROM department";
+  connection.query(query, function(err, results) {
+    const table = cTable.getTable(results);
+    console.log(table);
+  });
+}
 
 // Search Manager
 function byManager() {}

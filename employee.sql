@@ -20,7 +20,8 @@ CREATE TABLE role (
   title VARCHAR(30) NOT NULL,
   salary DECIMAL(10, 2) NOT NULL,
   department_id INTEGER(10),
-  PRIMARY KEY(id)
+  PRIMARY KEY(id),
+  FOREIGN KEY(department_id) REFERENCES department(id)
 );
 
 -- Created the table "employee"
@@ -29,36 +30,34 @@ CREATE TABLE employee (
   first_name VARCHAR(30) NOT NULL,
   last_name VARCHAR(30) NOT NULL,
   role_id INTEGER(10) NOT NULL,
-  manager_id INTEGER(10),
-  PRIMARY KEY(id)
+  manager_id INTEGER,
+  PRIMARY KEY(id),
+  FOREIGN KEY(role_id) REFERENCES role(id),
+  FOREIGN KEY(manager_id) REFERENCES employee(id)
 );
 
 -- Add data into "department"
 INSERT INTO department (name)
-VALUES ("Accounting");
-
-INSERT INTO department (name)
-VALUES ("Design");
-
-INSERT INTO department (name)
-VALUES ("Engineering");
+VALUES ("sales"),
+("Engineering"),
+("Finance"),
+("Legal");
 
 -- Add data into "role"
 INSERT INTO role (title, salary, department_id)
-VALUES ("CPA", 95000, 1);
-
-INSERT INTO role (title, salary, department_id)
-VALUES ("Lead Scientist", 85000, 2);
-
-INSERT INTO role (title, salary, department_id)
-VALUES ("Senior Engineer", 95000, 3);
+VALUES ("Sales Lead", 100000, 1),
+("Salesperson", 80000, 1),
+("Lead Engineer", 150000, 2),
+("Software Engineer", 120000, 2),
+("Accountant", 125000, 3),
+("Legal Team Lead", 250000, 4),
+("Lawyer", 190000, 4);
 
 -- Add data into "employee"
-INSERT INTO employee (first_name, last_name, role_id, manger_id)
-VALUES ("Pepper", "Potts", 1, 1);
-
-INSERT INTO employee (first_name, last_name, role_id, manger_id)
-VALUES ("Tony", "Stark", 3, 1);
-
-INSERT INTO employee (first_name, last_name, role_id, manger_id)
-VALUES ("Pepper", "Pots", 1, 1);
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
+VALUES ("John", "Doe", 1),
+("Mike", "Chan", 2),
+("Ashley", "Rodriguez", 3),
+("Kevin", "Tupik", 4),
+("Malia", "Brown", 5),
+("Sarah", "Lourd", 6);
