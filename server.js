@@ -132,14 +132,33 @@ function addEmployee() {
         err,
         results
       ) {
-        console.log("added");
+        console.log(
+          firstName + " " + lastName + " is added to the employee list"
+        );
         runSearch();
       });
     });
 }
 
 // Remove Employee
-function removeEmployee() {}
+function removeEmployee() {
+  inquirer
+    .prompt([
+      {
+        name: "employee_id",
+        type: "input",
+        message: "Which employee do you want to remove?"
+      }
+    ])
+    .then(function(answer) {
+      var employeeId = answer.employee_id;
+      var query = "DELETE FROM employee WHERE id =?";
+      connection.query(query, employeeId, function(err, results) {
+        console.log("Employee removed");
+      });
+      runSearch();
+    });
+}
 
 // Update Role
 function updateRole() {}
